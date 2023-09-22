@@ -1,0 +1,40 @@
+{
+  "businesses": [
+    {
+
+      "categories": [
+        {
+          "alias": "hotels",
+          "title": "Hotels"
+        },
+        {
+          "alias": "venues",
+          "title": "Venues & Event Spaces"
+        }
+      ],
+      "rating": 3.5,
+      "coordinates": {
+        "latitude": 37.5318499847249,
+        "longitude": -122.27102458477
+      },
+      "transactions": [],
+      "price": "$$",
+      "location": {
+        "address1": "400 Concourse Dr",
+        "address2": "",
+        "address3": "",
+        "city": "Belmont",
+        "zip_code": "94002",
+        "country": "US",
+        "state": "CA",
+        "display_address": [
+          "400 Concourse Dr",
+          "Belmont, CA 94002"
+        ]
+      },
+      "phone": "+16505918600",
+      "display_phone": "(650) 591-8600"
+    }
+  ],
+  "total": 1
+}
