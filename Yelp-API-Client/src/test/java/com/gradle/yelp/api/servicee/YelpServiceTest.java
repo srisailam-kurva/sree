@@ -56,17 +56,19 @@ public class YelpServiceTest {
     }
 
 
-    @Test
+        @Test
     public void testGetBusinessesByPhoneRequestFailed() throws IOException {
-        String phone = "123-456-7890";
+        String phone = null;
         Call<String> call = mock(Call.class);
-        when(call.execute()).thenReturn(Response.error(404, okhttp3.ResponseBody.create(null, "Not Found")));
+        when(call.execute()).thenReturn(Response.error(400, okhttp3.ResponseBody.create(null, "Not Found")));
         when(retrofitAPI.getAllBusinessByPhone(any(), eq(phone))).thenReturn(call);
 
         ResponseEntity<String> responseEntity = yelpService.getBusinessesByPhone(phone);
 
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        assertEquals("Request failed with code: 404", responseEntity.getBody());
+        assertEquals("Request failed with code: 400", responseEntity.getBody());
     }
+
+
 }
 
