@@ -1,29 +1,22 @@
 package com.gradle.yelp.api.servicee;
 
 import com.gradle.yelp.api.controller.RetrofitAPIController;
-import okhttp3.MediaType;
-import okhttp3.ResponseBody;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import retrofit2.Call;
 import retrofit2.Response;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class YelpServiceTest {
 
@@ -55,8 +48,7 @@ public class YelpServiceTest {
         assertEquals(mockResponse, responseEntity.getBody());
     }
 
-
-        @Test
+    @Test
     public void testGetBusinessesByPhoneRequestFailed() throws IOException {
         String phone = null;
         Call<String> call = mock(Call.class);
@@ -69,6 +61,17 @@ public class YelpServiceTest {
         assertEquals("Request failed with code: 400", responseEntity.getBody());
     }
 
+    @Test
+    public void testGetBusinessesByPhoneIOException() throws IOException {
+        String phone = "123-456-7890";
+        Call<String> call = mock(Call.class);
+
+        when(retrofitAPI.getAllBusinessByPhone(any(), eq(phone))).thenReturn(call);
+        when(call.execute()).thenThrow(new IOException("Request execution failed."));
+        assertThrows(RuntimeException.class, () -> yelpService.getBusinessesByPhone(phone));
+
+        verify(retrofitAPI, times(1)).getAllBusinessByPhone(any(), eq(phone));
+    }
+
 
 }
-

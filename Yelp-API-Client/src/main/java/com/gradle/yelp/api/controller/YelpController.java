@@ -19,7 +19,7 @@ public class YelpController {
     public YelpService yelpService;
 
     @GetMapping(value = "/businessesByPhone", produces = "application/json")
-    public ResponseEntity<String> getBusinessesByPhone(@RequestParam("phone") String phone) throws IOException {
+    public ResponseEntity<String> getBusinessesByPhone(@RequestParam("phone") String phone) {
         return yelpService.getBusinessesByPhone(phone);
     }
 

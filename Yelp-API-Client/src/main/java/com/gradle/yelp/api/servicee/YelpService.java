@@ -27,16 +27,20 @@ public class YelpService {
         this.retrofitAPI = client.create(RetrofitAPIController.class);
     }
 
-    public ResponseEntity<String> getBusinessesByPhone(String phone) throws IOException {
+    public ResponseEntity<String> getBusinessesByPhone(String phone) {
+        try {
+            Call<String> call = retrofitAPI.getAllBusinessByPhone(API_KEY, phone);
+            Response<String> response = call.execute();
 
-        Call<String> call = retrofitAPI.getAllBusinessByPhone(API_KEY, phone);
-        Response<String> response = call.execute();
-
-        if (!response.isSuccessful()) {
-            return new ResponseEntity<>("Request failed with code: " + response.code(), HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<>(response.body(), HttpStatus.OK);
+            if (!response.isSuccessful()) {
+                return new ResponseEntity<>("Request failed with code: " + response.code(), HttpStatus.BAD_REQUEST);
+            } else {
+                return new ResponseEntity<>(response.body(), HttpStatus.OK);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
+
 
 }
